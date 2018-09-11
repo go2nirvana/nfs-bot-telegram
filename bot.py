@@ -37,10 +37,13 @@ def track_champ(bot, update):
 
 
 def config_handler(bot, update):
-    config_number = re.findall(r'/config (\d+[r]?)', update.message.text.lower())[0]
+    try:
+        config_number = re.findall(r'/config (\d+[r]?)', update.message.text.lower())[0]
+        is_correct = config_number in {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+                                       '1r', '2r', '3r', '4r', '5r', '6r', '7r', '8r', '9r', '10r', '11r'}
+    except IndexError:
+        is_correct = False
 
-    is_correct = config_number in {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
-                                   '1r', '2r', '3r', '4r', '5r', '6r', '7r', '8r', '9r', '10r', '11r'}
     if is_correct:
         is_reverse = config_number.endswith('r')
         video_url = tracks_videos.get(config_number, 'Видео нет :(')

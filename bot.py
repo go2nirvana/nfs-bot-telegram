@@ -1,6 +1,7 @@
 import logging
 
 import os
+import re
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler
 
@@ -36,7 +37,8 @@ def track_champ(bot, update):
 
 
 def config_handler(bot, update):
-    config_number = update.message.text[len('/config'):].strip().lower()
+    config_number = re.findall(r'/config (\d+[r]?)', update.message.text.lower())
+
     is_correct = config_number in {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
                                    '1r', '2r', '3r', '4r', '5r', '6r', '7r', '8r', '9r', '10r', '11r'}
     if is_correct:

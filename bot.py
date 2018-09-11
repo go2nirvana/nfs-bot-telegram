@@ -10,6 +10,22 @@ dispatcher = updater.dispatcher
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
+tracks_videos = {
+    '1': 'https://www.youtube.com/watch?v=bgjPhZoP-hg&t=57s',
+    '2': 'https://www.youtube.com/watch?v=4ztokJHdZCA',
+    '3r': 'https://www.youtube.com/watch?v=gJYpIeA-DXI',
+    '4r': 'https://www.youtube.com/watch?v=1jEUzqv9HTI',
+    '5r': 'https://www.youtube.com/watch?v=TCX2fkVBXXo',
+    '7': 'https://www.youtube.com/watch?v=PS4YyPBjdGk',
+    '7r': 'https://www.youtube.com/watch?v=1vN8BeDobmo',
+    '10': 'https://www.youtube.com/watch?v=wjEatid4OrY',
+    '9': 'https://www.youtube.com/watch?v=Qxtm6zpcB-s \n https://www.youtube.com/watch?v=NLZmBhHZI4U',
+    '9r': 'https://www.youtube.com/watch?v=UCNhStrNAEc',
+    '11r': 'https://www.youtube.com/watch?v=lrc-jDG8Z0Y',
+    '10r': 'https://www.youtube.com/watch?v=lrc-jDG8Z0Y',
+
+}
+
 
 def track_light(bot, update):
     pass
@@ -25,9 +41,10 @@ def config_handler(bot, update):
                                    '1r', '2r', '3r', '4r', '5r', '6r', '7r', '8r', '9r', '10r', '11r'}
     if is_correct:
         is_reverse = config_number.endswith('r')
+        video_url = tracks_videos.get(config_number, 'Видео нет :(')
         if is_reverse:
             config_number = config_number[:-1]
-        response = 'Карта конфига *№{}{}:*'.format(config_number, ' РЕВЕРС' if is_reverse else '')
+        response = 'Карта конфига *№{}{}:* \n{}'.format(config_number, ' РЕВЕРС' if is_reverse else '', video_url)
         bot.send_message(chat_id=update.message.chat_id, text=response, parse_mode=ParseMode.MARKDOWN)
 
         photo_name = config_number + ('r' if is_reverse and config_number in '123' else '') + '.png'

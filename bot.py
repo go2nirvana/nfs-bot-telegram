@@ -45,22 +45,17 @@ def config_handler(bot, update):
         is_correct = False
 
     if is_correct:
-        is_reverse = config_number.endswith('r')
         video_url = tracks_videos.get(config_number, 'Видео нет :(')
-        if is_reverse:
-            config_number = config_number[:-1]
-        response = 'Карта конфига *№{}{}:* \n{}'.format(
-            config_number,
-            ' РЕВЕРС' if is_reverse else '',
+        response = 'Карта конфига *№{}:*\n{}'.format(
+            config_number.replace('r', ' РЕВЕРС'),
             video_url)
         bot.send_message(chat_id=update.message.chat_id,
                          text=response,
                          parse_mode=ParseMode.MARKDOWN,
                          disable_web_page_preview=True)
 
-        photo_name = config_number + ('r' if is_reverse and config_number in '123' else '') + '.png'
         bot.send_photo(chat_id=update.message.chat_id,
-                       photo=open('tracks/%s' % photo_name, 'rb'))
+                       photo=open('tracks/%s.png' % config_number, 'rb'))
     else:
         response = 'Такого конфига нет'
         bot.send_message(chat_id=update.message.chat_id, text=response)

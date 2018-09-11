@@ -53,4 +53,4 @@ dispatcher.add_handler(CommandHandler('config', config_handler))
 dispatcher.add_handler(CommandHandler('week', week_handler))
 dispatcher.add_handler(CommandHandler('month', month_handler))
 
-updater.start_polling(timeout=1000)
+updater.start_polling()

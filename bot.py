@@ -44,8 +44,14 @@ def config_handler(bot, update):
         video_url = tracks_videos.get(config_number, 'Видео нет :(')
         if is_reverse:
             config_number = config_number[:-1]
-        response = 'Карта конфига *№{}{}:* \n{}'.format(config_number, ' РЕВЕРС' if is_reverse else '', video_url)
-        bot.send_message(chat_id=update.message.chat_id, text=response, parse_mode=ParseMode.MARKDOWN)
+        response = 'Карта конфига *№{}{}:* \n{}'.format(
+            config_number,
+            ' РЕВЕРС' if is_reverse else '',
+            video_url)
+        bot.send_message(chat_id=update.message.chat_id,
+                         text=response,
+                         parse_mode=ParseMode.MARKDOWN,
+                         disable_web_page_preview=True)
 
         photo_name = config_number + ('r' if is_reverse and config_number in '123' else '') + '.png'
         bot.send_photo(chat_id=update.message.chat_id,

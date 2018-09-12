@@ -53,7 +53,8 @@ def config_handler(bot, update):
                          text=response,
                          parse_mode=ParseMode.MARKDOWN,
                          disable_web_page_preview=True)
-
+        if config_number not in {'1r', '2r', '3r'}:
+            config_number = config_number.replace('r', '')
         bot.send_photo(chat_id=update.message.chat_id,
                        photo=open('tracks/%s.png' % config_number, 'rb'))
     else:

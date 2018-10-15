@@ -3,9 +3,13 @@ import logging
 import os
 import re
 from telegram import ParseMode
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from mulyar import accumulate_users, roll_mulyar
+
 
 updater = Updater(token=os.environ.get('BOT_TOKEN'))
+
+# updater = Updater(token='639705747:AAEXOwlqst09Mc3Jb1GQbOJUgwWXf-d20DA')
 dispatcher = updater.dispatcher
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -76,5 +80,7 @@ dispatcher.add_handler(CommandHandler('track_champ', track_champ))
 dispatcher.add_handler(CommandHandler('config', config_handler))
 dispatcher.add_handler(CommandHandler('week', week_handler))
 dispatcher.add_handler(CommandHandler('month', month_handler))
+dispatcher.add_handler(CommandHandler('moo', roll_mulyar))
+dispatcher.add_handler(MessageHandler(Filters.text, accumulate_users))
 
 updater.start_polling()

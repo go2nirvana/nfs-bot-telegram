@@ -13,9 +13,7 @@ congrats = (
      'По хуевой траектрии сегодня ездит {}', 'А первое место занимает... мууу... кхм... {}')
 )
 
-print(os.environ.get('REDIS_URL'))
-redis_cli = redis.from_url(os.environ.get('REDIS_URL').decode())
-# redis_cli = redis.from_url('redis://h:p2b29026488dbddbb4b61635442d8aa816a68e98d1ceb35b359cfb9beb49e0994@ec2-18-211-154-159.compute-1.amazonaws.com:49039')
+redis_cli = redis.from_url(os.environ.get('REDIS_URL'))
 
 if not redis_cli.get('mulyar'):
     redis_cli.set('mulyar', {})

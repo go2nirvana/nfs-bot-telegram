@@ -9,7 +9,6 @@ from mulyar import accumulate_users, roll_mulyar
 
 updater = Updater(token=os.environ.get('BOT_TOKEN'))
 
-# updater = Updater(token='639705747:AAEXOwlqst09Mc3Jb1GQbOJUgwWXf-d20DA')
 dispatcher = updater.dispatcher
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

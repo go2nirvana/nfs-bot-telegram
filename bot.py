@@ -15,7 +15,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 
 tracks_videos = {
-    '1': 'https://www.youtube.com/watch?v=bgjPhZoP-hg&t=57s',
+    '1': 'https://www.youtube.com/watch?v=bgjPhZoP-hg',
     '2': 'https://www.youtube.com/watch?v=4ztokJHdZCA',
     '3r': 'https://www.youtube.com/watch?v=gJYpIeA-DXI',
     '4r': 'https://www.youtube.com/watch?v=1jEUzqv9HTI',

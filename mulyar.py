@@ -15,6 +15,10 @@ congrats = (
     ('А Муляр дня сегодня - {}, не вижу нарушения!', '{}, там равных не было, так что ты *муляр дня* в качестве штрафа',
      'По хуевой траектрии сегодня ездит {}', 'А первое место занимает... мууу... кхм... {}')
 )
+reminders = (
+    'Напоминаю, муляр дня - {}',
+    'Напоминаю, муляр дня - {}. Муляр дня *юзернейм*. Прівєт пострижися!'
+)
 
 redis_cli = redis.from_url(os.environ.get('REDIS_URL'))
 
@@ -80,7 +84,7 @@ def roll_mulyar(bot, update):
                                             winner.id)
     if is_rolled_today(chat_id):
         bot.send_message(chat_id=chat_id,
-                         text='Напоминаю, муляр дня - {}'.format(winner),
+                         text=choice(reminders).format(winner),
                          parse_mode=ParseMode.MARKDOWN)
         return
     set_rolled_today(chat_id)

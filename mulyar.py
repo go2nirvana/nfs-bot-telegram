@@ -5,6 +5,7 @@ from random import choice
 from time import sleep
 
 import redis
+import telegram
 from telegram import ParseMode
 
 congrats = (
@@ -61,11 +62,22 @@ def roll_mulyar(bot, update):
     if not md:
         return
 
-    winner_id = choice(md['pull']) if not is_rolled_today(chat_id) else md['winner']
-    winner = bot.get_chat_member(chat_id, winner_id).user
+    retries = 0
+    while True:
+        try:
+            winner_id = choice(md['pull']) if not is_rolled_today(chat_id) else md['winner']
+            winner = bot.get_chat_member(chat_id, winner_id).user
+            break
+        except telegram.error.BadRequest:
+            retries += 1
+            if retries > 10:
+                bot.send_message(chat_id=chat_id,
+                                 text='Чот не получилось :С',
+                                 parse_mode=ParseMode.MARKDOWN)
+                return
+
     winner = '[{}](tg://user?id={})'.format(' '.join([winner.first_name or '', winner.last_name or '']),
                                             winner.id)
-
     if is_rolled_today(chat_id):
         bot.send_message(chat_id=chat_id,
                          text='Напоминаю, муляр дня - {}'.format(winner),

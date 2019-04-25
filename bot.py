@@ -6,7 +6,6 @@ from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from mulyar import accumulate_users, roll_mulyar
 
-
 updater = Updater(token=os.environ.get('BOT_TOKEN'))
 
 dispatcher = updater.dispatcher
@@ -16,16 +15,16 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 tracks_videos = {
     '1': 'https://www.youtube.com/watch?v=bgjPhZoP-hg',
-    '2': 'https://www.youtube.com/watch?v=4ztokJHdZCA\n https://youtu.be/CSOsdOCMA8U\n https://youtu.be/L2zLjuYXqLM',
+    '2': 'https://www.youtube.com/watch?v=4ztokJHdZCA\nhttps://youtu.be/CSOsdOCMA8U\nhttps://youtu.be/L2zLjuYXqLM',
     '3r': 'https://www.youtube.com/watch?v=gJYpIeA-DXI',
     '4r': 'https://www.youtube.com/watch?v=1jEUzqv9HTI',
     '5r': 'https://www.youtube.com/watch?v=TCX2fkVBXXo',
     '7': 'https://www.youtube.com/watch?v=PS4YyPBjdGk',
     '7r': 'https://www.youtube.com/watch?v=1vN8BeDobmo',
     '10': 'https://www.youtube.com/watch?v=wjEatid4OrY',
-    '9': 'https://www.youtube.com/watch?v=Qxtm6zpcB-s \n https://www.youtube.com/watch?v=NLZmBhHZI4U',
+    '9': 'https://www.youtube.com/watch?v=Qxtm6zpcB-s\nhttps://www.youtube.com/watch?v=NLZmBhHZI4U',
     '9r': 'https://www.youtube.com/watch?v=UCNhStrNAEc',
-    '11r': 'https://www.youtube.com/watch?v=lrc-jDG8Z0Y\n https://www.youtube.com/watch?v=lrc-jDG8Z0Y',
+    '11r': 'https://www.youtube.com/watch?v=lrc-jDG8Z0Y\nhttps://www.youtube.com/watch?v=lrc-jDG8Z0Y',
 
 }
 
@@ -62,7 +61,6 @@ def config_handler(bot, update):
     else:
         response = 'Такого конфига нет'
         bot.send_message(chat_id=update.message.chat_id, text=response)
-
 
 
 def week_handler(bot, update):

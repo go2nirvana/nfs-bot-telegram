@@ -1,7 +1,7 @@
 import datetime
 import os
 from ast import literal_eval
-from random import choice
+from random import choice, randint
 from time import sleep
 
 import redis
@@ -12,12 +12,20 @@ congrats = (
     ('Oh, shieee...', '*АЛЯРМ*', '*МАЛЬЧИКИ СААБИРИИТЕСЬ!!!*'),
     ('Вычисляем хуевую траекторию...', 'Вычисляем апекс-хуяпекс', '_глубоко затягивает вейп_'),
     ('Вторая группа на старт!', 'Первая группа на старт'),
-    ('А Муляр дня сегодня - {}, не вижу нарушения!', '{}, там равных не было, так что ты *муляр дня* в качестве штрафа',
+    ('А Муляр дня сегодня - {}, не вижу нарушения!', '{}, там равных не было, так что ты *Муляр дня* в качестве штрафа',
      'По хуевой траектрии сегодня ездит {}', 'А первое место занимает... мууу... кхм... {}')
 )
+
+special = (
+    ('Ехал Муляр через Муляр,',),
+    ('Видит Муляр - Муляр Муляр.',),
+    ('Сунул Муляр Муляр в Муляр,',),
+    ('Муляр Муляр Муляр {}',)
+)
+
 reminders = (
-    'Напоминаю, муляр дня - {}',
-    'Напоминаю, муляр дня - {}. Прівєт пострижися!'
+    'Напоминаю, Муляр дня - {}',
+    'Напоминаю, Муляр дня - {}. Прівєт пострижися!'
 )
 
 redis_cli = redis.from_url(os.environ.get('REDIS_URL'))
@@ -89,7 +97,13 @@ def roll_mulyar(bot, update):
         return
     set_rolled_today(chat_id)
     set_winner(chat_id, winner_id)
-    for m in congrats:
+
+    if randint(0, 100) > 79:
+        congrats_text = special
+    else:
+        congrats_text = congrats
+
+    for m in congrats_text:
         bot.send_message(chat_id=chat_id,
                          text=choice(m).format(winner),
                          parse_mode=ParseMode.MARKDOWN)

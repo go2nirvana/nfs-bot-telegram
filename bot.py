@@ -2,6 +2,7 @@ import logging
 
 import os
 import re
+import random
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from mulyar import accumulate_users, roll_mulyar
@@ -30,6 +31,14 @@ tracks_videos = {
     '11r': 'https://www.youtube.com/watch?v=lrc-jDG8Z0Y\nhttps://www.youtube.com/watch?v=lrc-jDG8Z0Y',
 
 }
+
+raketa_text = (
+    'Сегодня не ездят а летают: {}',
+    'Вова сказал, шо сьогодня как сiв, как поїхав на: {}',
+    '{} - вообще не оч, но Пикулин проедет и Вова прикрутит',
+    '{} - вообще не оч, но Манило проедет и Вова прикрутит',
+    '{} - заправлены авиационным керосином, но у тебя все равно не поедут:)'
+)
 
 
 def track_light(bot, update):
@@ -70,6 +79,11 @@ def say(bot, update):
     if update.effective_chat.id == admin_chat_id:
         msg = update.message.text.lower()[5:]
         bot.send_message(chat_id=nfs_chat_id, text=msg)
+        
+def raketa(bot, update):
+    cars = random.sample([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 21, 33, 69], 5)
+    cars = ', '.join(map(str, cars))
+    bot.send_message(chat=update.message.chat_id, text=random.choice(raketa_text).format(cars))
 
 
 def week_handler(bot, update):
@@ -88,5 +102,6 @@ dispatcher.add_handler(CommandHandler('week', week_handler))
 dispatcher.add_handler(CommandHandler('month', month_handler))
 dispatcher.add_handler(CommandHandler('moo', roll_mulyar))
 dispatcher.add_handler(CommandHandler('say', say))
+dispatcher.add_handler(CommandHandler('raketa', raketa))
 
 updater.start_polling()

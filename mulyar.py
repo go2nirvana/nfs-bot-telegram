@@ -1,5 +1,6 @@
 import datetime
 import os
+import re
 from ast import literal_eval
 from random import choice, randint
 from time import sleep
@@ -37,9 +38,10 @@ def set_rolled_today(chat_id):
     redis_cli.set(str(chat_id), rec)
 
 
-def set_winner(chat_id, user_id):
+def set_winner(chat_id, user_id, name='Муляр'):
     rec = _get_mulyar_data(str(chat_id))
     rec['winner'] = str(user_id)
+    rec['custom_name'] = name
     redis_cli.set(str(chat_id), rec)
 
 
@@ -61,6 +63,7 @@ def accumulate_users(bot, update):
     mulyar_data = _get_mulyar_data(chat_id)
     if not mulyar_data:
         mulyar_data = {'pull': [],
+                       'custom_name': 'Муляр',
                        'updated': '1970-01-01',
                        'winner': ''}
     if user_id not in mulyar_data['pull']:
@@ -69,6 +72,12 @@ def accumulate_users(bot, update):
 
 
 def roll_mulyar(bot, update):
+    custom_name = 'Муляр'
+    if len(update.message.text.split()) > 1:
+        regex = re.compile('[^a-zA-Z ]')
+        custom_name = regex.sub('', ' '.join(update.message.text.split()[1:3]))
+        if not custom_name.strip():
+            custom_name = 'Муляр'
     chat_id = update.effective_chat.id
     md = _get_mulyar_data(chat_id)
     if not md:
@@ -91,12 +100,13 @@ def roll_mulyar(bot, update):
     winner = '[{}](tg://user?id={})'.format(' '.join([winner.first_name or '', winner.last_name or '']),
                                             winner.id)
     if is_rolled_today(chat_id):
+        custom_name = md.get('custom_name', 'Муляр')
         bot.send_message(chat_id=chat_id,
-                         text=choice(reminders).format(winner),
+                         text=choice(reminders).format(winner).replace('Муляр', custom_name),
                          parse_mode=ParseMode.MARKDOWN)
         return
     set_rolled_today(chat_id)
-    set_winner(chat_id, winner_id)
+    set_winner(chat_id, winner_id, name=custom_name)
 
     if randint(0, 100) > 79:
         congrats_text = special
@@ -105,6 +115,6 @@ def roll_mulyar(bot, update):
 
     for m in congrats_text:
         bot.send_message(chat_id=chat_id,
-                         text=choice(m).format(winner),
+                         text=choice(m).format(winner).replace('Муляр', custom_name),
                          parse_mode=ParseMode.MARKDOWN)
         sleep(2)

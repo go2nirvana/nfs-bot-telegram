@@ -76,7 +76,7 @@ def config_handler(bot, update):
 
 
 def say(bot, update):
-    if update.effective_chat.id == admin_chat_id:
+    if str(update.message.chat_id) == str(admin_chat_id):
         msg = update.message.text.lower()[5:]
         bot.send_message(chat_id=nfs_chat_id, text=msg)
         

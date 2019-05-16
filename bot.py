@@ -83,7 +83,7 @@ def say(bot, update):
 def raketa(bot, update):
     cars = random.sample([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 21, 33, 69], 5)
     cars = ', '.join(map(str, cars))
-    bot.send_message(chat=update.message.chat_id, text=random.choice(raketa_text).format(cars))
+    bot.send_message(chat_id=update.message.chat_id, text=random.choice(raketa_text).format(cars))
 
 
 def week_handler(bot, update):

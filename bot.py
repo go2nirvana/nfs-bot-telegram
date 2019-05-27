@@ -54,7 +54,7 @@ def config_handler(bot, update):
     try:
         config_number = re.findall(r'/config (\d+[r]?)', update.message.text.lower())
         if config_number:
-            config_number = config_numer[0]
+            config_number = config_number[0]
         else:
             config_number = str(random.randint(1, 11))
             config_number += random.choice(['', 'r'])

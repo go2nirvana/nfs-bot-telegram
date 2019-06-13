@@ -89,7 +89,7 @@ def say(bot, update):
         bot.send_message(chat_id=nfs_chat_id, text=msg)
         
 def raketa(bot, update):
-    cars = random.sample([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 21, 33, 69], 5)
+    cars = random.sample([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 21, 44, 69], 5)
     cars = ', '.join(map(str, cars))
     bot.send_message(chat_id=update.message.chat_id, text=random.choice(raketa_text).format(cars))
 

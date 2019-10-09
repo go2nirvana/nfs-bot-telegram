@@ -105,20 +105,20 @@ def roll_mulyar(bot, update):
         bot.send_message(chat_id=chat_id,
                          text=choice(reminders).format(winner).replace('Муляр', custom_name),
                          parse_mode=ParseMode.MARKDOWN)
-        return
-    set_rolled_today(chat_id)
-    set_winner(chat_id, winner_id, name=custom_name)
-
-    if randint(0, 100) > 79:
-        congrats_text = special
     else:
-        congrats_text = congrats
+        set_rolled_today(chat_id)
+        set_winner(chat_id, winner_id, name=custom_name)
 
-    for m in congrats_text:
-        bot.send_message(chat_id=chat_id,
-                         text=choice(m).format(winner).replace('Муляр', custom_name),
-                         parse_mode=ParseMode.MARKDOWN)
-        sleep(2)
+        if randint(0, 100) > 79:
+            congrats_text = special
+        else:
+            congrats_text = congrats
+
+        for m in congrats_text:
+            bot.send_message(chat_id=chat_id,
+                             text=choice(m).format(winner).replace('Муляр', custom_name),
+                             parse_mode=ParseMode.MARKDOWN)
+            sleep(2)
 
     add_pipi = not randint(0, 9)
     if add_pipi:

@@ -99,6 +99,7 @@ def roll_mulyar(bot, update):
 
     winner = '[{}](tg://user?id={})'.format(' '.join([winner.first_name or '', winner.last_name or '']),
                                             winner.id)
+
     if is_rolled_today(chat_id):
         custom_name = md.get('custom_name', 'Муляр')
         bot.send_message(chat_id=chat_id,
@@ -118,3 +119,13 @@ def roll_mulyar(bot, update):
                          text=choice(m).format(winner).replace('Муляр', custom_name),
                          parse_mode=ParseMode.MARKDOWN)
         sleep(2)
+
+    add_pipi = not randint(0, 9)
+    if add_pipi:
+        try:
+            bot.send_message(chat_id=chat_id,
+                             text='Кстати, Пищинка дня - [{}](tg://user?id={})'.format('Миша', os.environ.get('MISHA_ID')),
+                             parse_mode=ParseMode.MARKDOWN)
+        except Exception:
+            # i don't really give a fuck if this works at all
+            pass

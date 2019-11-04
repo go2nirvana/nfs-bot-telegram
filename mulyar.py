@@ -120,7 +120,7 @@ def roll_mulyar(bot, update):
                              parse_mode=ParseMode.MARKDOWN)
             sleep(2)
 
-    add_pipi = not randint(0, 9)
+    add_pipi = not randint(0, 20)
     if add_pipi:
         try:
             bot.send_message(chat_id=chat_id,

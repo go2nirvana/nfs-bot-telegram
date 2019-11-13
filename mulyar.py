@@ -74,8 +74,8 @@ def accumulate_users(bot, update):
 def roll_mulyar(bot, update):
     custom_name = 'Муляр'
     if len(update.message.text.split()) > 1:
-        regex = re.compile('[^a-zA-Zа-яА-Я ]')
-        custom_name = regex.sub('', ' '.join(update.message.text.split()[1:3]))
+        regex = re.compile('[^a-zA-Zа-яА-Я0-9 ]')
+        custom_name = regex.sub('', ' '.join(update.message.text.split()[1:]))
         if not custom_name.strip():
             custom_name = 'Муляр'
     chat_id = update.effective_chat.id

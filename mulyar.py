@@ -109,7 +109,7 @@ def roll_mulyar(bot, update):
         set_rolled_today(chat_id)
         set_winner(chat_id, winner_id, name=custom_name)
 
-        if randint(0, 100) > 79:
+        if randint(0, 100) > 79 and len(custom_name) < 50:
             congrats_text = special
         else:
             congrats_text = congrats

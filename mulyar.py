@@ -29,6 +29,12 @@ reminders = (
     'Напоминаю, Муляр дня - {}. Прівєт пострижися!'
 )
 
+pipi = (
+    'Кстати, Пищинка дня - [{}](tg://user?id={})'.format('Миша', os.environ.get('MISHA_ID')),
+    'А по вопросам русских народных инструментов семейства гармоник - '
+    'пожалуйста, обращайтесь к [{}](tg://user?id={})'.format('Кириллу', os.environ.get('KIRILL_ID'))
+)
+
 redis_cli = redis.from_url(os.environ.get('REDIS_URL'))
 
 
@@ -120,11 +126,11 @@ def roll_mulyar(bot, update):
                              parse_mode=ParseMode.MARKDOWN)
             sleep(2)
 
-    add_pipi = not randint(0, 20)
+    add_pipi = not randint(0, 10)
     if add_pipi:
         try:
             bot.send_message(chat_id=chat_id,
-                             text='Кстати, Пищинка дня - [{}](tg://user?id={})'.format('Миша', os.environ.get('MISHA_ID')),
+                             text=choice(pipi),
                              parse_mode=ParseMode.MARKDOWN)
         except Exception:
             # i don't really give a fuck if this works at all

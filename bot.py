@@ -42,6 +42,25 @@ raketa_text = (
 )
 
 
+timing_text = """
+http://karting.playwar.com:3333/board.html
+http://karting.playwar.com:3333/onboard.html
+http://karting.playwar.com:3333/team.html
+"""
+
+
+help_text = """
+Список команд бота:
+/config <номер> - выдать карту указаного конфига. Слуйчайный конфиг, если не указать цифру.
+Например "/config 2r". r - значит реверс
+/raketa - выдать 5 случайных картов
+/moo <любая фраза> - разыграть героя дня. Если фраза не указана, разыгрывается Муляр дня.
+Например "/moo телега"
+/time - выдать ссылки на тайминг
+/help - помощь
+"""
+
+
 def track_light(bot, update):
     pass
 
@@ -85,13 +104,25 @@ def config_handler(bot, update):
 
 def say(bot, update):
     if str(update.message.chat_id) == str(admin_chat_id):
-        msg = update.message.text.lower()[5:]
+        msg = update.message.text[5:]
         bot.send_message(chat_id=nfs_chat_id, text=msg)
-        
+
+
 def raketa(bot, update):
     cars = random.sample([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 21, 44, 69], 5)
     cars = ', '.join(map(str, cars))
     bot.send_message(chat_id=update.message.chat_id, text=random.choice(raketa_text).format(cars))
+
+
+def time(bot, update):
+    bot.send_message(chat_id=update.message.chat_id,
+                     text=timing_text,
+                     parse_mode=ParseMode.MARKDOWN,
+                     disable_web_page_preview=True)
+
+
+def help(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text=help_text)
 
 
 def week_handler(bot, update):
@@ -111,5 +142,7 @@ dispatcher.add_handler(CommandHandler('month', month_handler))
 dispatcher.add_handler(CommandHandler('moo', roll_mulyar))
 dispatcher.add_handler(CommandHandler('say', say))
 dispatcher.add_handler(CommandHandler('raketa', raketa))
+dispatcher.add_handler(CommandHandler('time', time))
+dispatcher.add_handler(CommandHandler('help', help))
 
 updater.start_polling()

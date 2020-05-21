@@ -121,6 +121,11 @@ def time(bot, update):
                      disable_web_page_preview=True)
 
 
+def notime(bot, update):
+    bot.send_message(chat_id=update.message.chat_id,
+                     text="Хавило - телега:)")
+
+
 def help(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=help_text)
 
@@ -143,6 +148,7 @@ dispatcher.add_handler(CommandHandler('moo', roll_mulyar))
 dispatcher.add_handler(CommandHandler('say', say))
 dispatcher.add_handler(CommandHandler('raketa', raketa))
 dispatcher.add_handler(CommandHandler('time', time))
+dispatcher.add_handler(CommandHandler('notime', notime))
 dispatcher.add_handler(CommandHandler('help', help))
 
 updater.start_polling()

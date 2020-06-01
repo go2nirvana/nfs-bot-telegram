@@ -6,6 +6,7 @@ import random
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from mulyar import accumulate_users, roll_mulyar
+from telega import notime
 
 nfs_chat_id = os.environ.get('NFS_CHAT_ID')
 admin_chat_id = os.environ.get('ADMIN_CHAT_ID')
@@ -119,11 +120,6 @@ def time(bot, update):
                      text=timing_text,
                      parse_mode=ParseMode.MARKDOWN,
                      disable_web_page_preview=True)
-
-
-def notime(bot, update):
-    bot.send_message(chat_id=update.message.chat_id,
-                     text="Хавило - телега:)")
 
 
 def help(bot, update):

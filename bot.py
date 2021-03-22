@@ -7,6 +7,7 @@ from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from mulyar import accumulate_users, roll_mulyar
 from telega import notime
+from weather import WeatherForecast, WeatherException
 
 nfs_chat_id = os.environ.get('NFS_CHAT_ID')
 admin_chat_id = os.environ.get('ADMIN_CHAT_ID')
@@ -127,6 +128,22 @@ def help(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=help_text)
 
 
+def weather(bot, update):
+    try:
+        forecast = WeatherForecast(update.message.text[len('\w'):].strip())
+        bot.send_message(chat_id=update.message.chat_id,
+                         parse_mode=ParseMode.MARKDOWN,
+                         text=forecast.get_bot_response())
+    except WeatherException as e:
+        bot.send_message(chat_id=update.message.chat_id,
+                         parse_mode=ParseMode.MARKDOWN,
+                         text=e.text)
+        return
+    except Exception as e:
+        bot.send_message(chat_id=str(admin_chat_id),
+                         text=str(e))
+
+
 def week_handler(bot, update):
     pass
 
@@ -147,5 +164,6 @@ dispatcher.add_handler(CommandHandler('raketa', raketa))
 dispatcher.add_handler(CommandHandler('time', time))
 dispatcher.add_handler(CommandHandler('notime', notime))
 dispatcher.add_handler(CommandHandler('help', help))
+dispatcher.add_handler(CommandHandler('w', weather))
 
 updater.start_polling()

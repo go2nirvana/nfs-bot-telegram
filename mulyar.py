@@ -32,7 +32,7 @@ reminders = (
 pipi = (
     'Кстати, Пищинка дня - [{}](tg://user?id={})'.format('Миша', os.environ.get('MISHA_ID')),
     'А по вопросам русских народных инструментов семейства гармоник - '
-    'пожалуйста, обращайтесь к [{}](tg://user?id={})'.format('Кириллу', os.environ.get('KIRILL_ID'))
+    'пожалуйста, обращайтесь к [{}](tg://user?id={})'.format('Керрилу', os.environ.get('KIRILL_ID'))
 )
 
 redis_cli = redis.from_url(os.environ.get('REDIS_URL'))

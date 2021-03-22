@@ -52,6 +52,4 @@ emoji = {
     7000: 'Ice Pellets',
     7101: 'Heavy Ice Pellets',
     7102: 'Light Ice Pellets',
-    8000: 'Thunderstorm'
-☀️🌤⛅️🌥☁️🌦🌧⛈🌩🌨❄️🌪
-}
+    8000: 'Thunderstorm'}

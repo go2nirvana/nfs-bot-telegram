@@ -220,14 +220,15 @@ class WeatherForecast:
         print('DATA', data)
         for item in data:
             dt = datetime.strptime(item['startTime'][:-len(':00')] + '00', request_time_format)
+            if dt.replace(tzinfo=None) >= end_time:
+                break
+                
             yield {'time': dt.strftime('%a %d %b'),
                    'temperature': f"{round(item['values']['temperatureMax']):+}/{round(item['values']['temperatureMin']):+}",
                    'precipitation_amount': round(item['values']['precipitationIntensity'], 2),
                    'precipitation_probability': item['values']['precipitationProbability'],
                    'weather_code': item['values']['weatherCode']}
             print(dt, end_time)
-            if dt.replace(tzinfo=None) >= end_time:
-                break
 
     def parse_detailed_forecast(self, data):
         end_time = self.start_time + timedelta(hours=self.event_length)
@@ -245,8 +246,8 @@ class WeatherForecast:
 
     def render_text(self, data):
         pre_header = f"Прогноз на {event_names[self.event_type]} {self.start_time.strftime('%d.%m')}"
-        header = f"{'Время': <7}{'Воздух': <7}{'Осадки': <10}"
-        line_template = "{time: <7}{temperature: <7}{precipitation_probability}% {precipitation_amount}мм/ч"
+        header = f"{'Время': <11}{'Воздух': <7}{'Осадки': <10}"
+        line_template = "{time: <11}{temperature: <7}{precipitation_probability}% {precipitation_amount}мм/ч"
         lines = [header, *[line_template.format(**item) for item in data]]
         return ("{pre_header}\n"
                 "```\n{forecast}\n```").format(pre_header=pre_header,

@@ -4,12 +4,9 @@ from pprint import pprint
 
 import pytz
 import requests
-import locale
 from pytz import timezone
 
 from bg_calendar import calendar, get_next_bg
-
-locale.setlocale(locale.LC_TIME, 'ru_ru')
 
 os.environ['TZ'] = 'Europe/Kiev'
 request_time_format = '%Y-%m-%dT%H:%M:%S%z'

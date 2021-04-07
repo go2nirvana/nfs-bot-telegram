@@ -3,6 +3,7 @@ import logging
 import os
 import re
 import random
+import traceback
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from mulyar import accumulate_users, roll_mulyar
@@ -141,7 +142,7 @@ def weather(bot, update):
         return
     except Exception as e:
         bot.send_message(chat_id=str(admin_chat_id),
-                         text=str(e))
+                         text=traceback.format_exc())
 
 
 def week_handler(bot, update):

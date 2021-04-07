@@ -4,9 +4,12 @@ from pprint import pprint
 
 import pytz
 import requests
+import locale
 from pytz import timezone
 
 from bg_calendar import calendar, get_next_bg
+
+locale.setlocale(locale.LC_TIME, 'ru_RU')
 
 os.environ['TZ'] = 'Europe/Kiev'
 request_time_format = '%Y-%m-%dT%H:%M:%S%z'
@@ -216,7 +219,18 @@ class WeatherForecast:
         return params
 
     def parse_week_forecast(self, data):
-        pass
+        end_time = self.start_time + timedelta(hours=self.event_length)
+        print('DATA', data)
+        for item in data:
+            dt = datetime.strptime(item['startTime'][:-len(':00')] + '00', request_time_format)
+            yield {'time': dt.strftime('%a %d %b'),
+                   'temperature': f"{round(item['values']['temperatureMax']):+}/{round(item['values']['temperatureMin']):+}",
+                   'precipitation_amount': round(item['values']['precipitationIntensity'], 2),
+                   'precipitation_probability': item['values']['precipitationProbability'],
+                   'weather_code': item['values']['weatherCode']}
+            print(dt, end_time)
+            if dt.replace(tzinfo=None) >= end_time:
+                break
 
     def parse_detailed_forecast(self, data):
         end_time = self.start_time + timedelta(hours=self.event_length)

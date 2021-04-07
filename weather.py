@@ -9,7 +9,7 @@ from pytz import timezone
 
 from bg_calendar import calendar, get_next_bg
 
-locale.setlocale(locale.LC_TIME, 'ru_RU')
+locale.setlocale(locale.LC_TIME, 'ru_ua')
 
 os.environ['TZ'] = 'Europe/Kiev'
 request_time_format = '%Y-%m-%dT%H:%M:%S%z'

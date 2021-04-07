@@ -3,12 +3,17 @@ import logging
 import os
 import re
 import random
-import traceback
+import sentry_sdk
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from mulyar import accumulate_users, roll_mulyar
 from telega import notime
 from weather import WeatherForecast, WeatherException
+
+sentry_sdk.init(
+    os.environ.get('SENTRY_DNS'),
+    traces_sample_rate=1.0
+)
 
 nfs_chat_id = os.environ.get('NFS_CHAT_ID')
 admin_chat_id = os.environ.get('ADMIN_CHAT_ID')
@@ -141,8 +146,7 @@ def weather(bot, update):
                          text=e.text)
         return
     except Exception as e:
-        bot.send_message(chat_id=str(admin_chat_id),
-                         text=traceback.format_exc())
+        sentry_sdk.capture_exception(e)
 
 
 def week_handler(bot, update):

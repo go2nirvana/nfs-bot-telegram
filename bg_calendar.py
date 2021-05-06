@@ -3,7 +3,7 @@ from datetime import datetime
 calendar = (
     {'date': '17.04.2021',
      'length': 4},
-    {'date': '01.05.2021',
+    {'date': '08.05.2021',
      'length': 4},
     {'date': '15.05.2021',
      'length': 7},

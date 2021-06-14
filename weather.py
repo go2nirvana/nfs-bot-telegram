@@ -235,7 +235,7 @@ class WeatherForecast:
         print('DATA', data)
         for item in data:
             dt = datetime.strptime(item['startTime'][:-len(':00')] + '00', request_time_format)
-            yield {'time': dt.strftime('%H:%S'),
+            yield {'time': dt.strftime('%H:%M'),
                    'temperature': f"{round(item['values']['temperature']):+}",
                    'precipitation_amount': round(item['values']['precipitationIntensity'], 2),
                    'precipitation_probability': item['values']['precipitationProbability'],

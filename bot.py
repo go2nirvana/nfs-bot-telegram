@@ -51,9 +51,9 @@ raketa_text = (
 
 
 timing_text = """
-http://karting.playwar.com:3333/board.html
-http://karting.playwar.com:3333/onboard.html
-http://karting.playwar.com:3333/team.html
+http://nfs.playwar.com/board.html
+http://nfs.playwar.com/onboard.html
+http://nfs.playwar.com/team.html
 """
 
 

@@ -95,7 +95,7 @@ too_far_text = 'Сорри, прогноз доступен максимум н�
 bad_response_text = 'Чет сервис погоды ругается (или я рак).'
 
 
-class WeatherForecaxst:
+class WeatherForecast:
     start_time: datetime
     end_time: datetime
 

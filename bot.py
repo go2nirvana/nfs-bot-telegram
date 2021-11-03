@@ -8,8 +8,8 @@ from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from mulyar import accumulate_users, roll_mulyar
 from telega import notime
-from weather import WeatherForecast
 from exceptions import WeatherException
+from weather import WeatherForecast
 
 sentry_sdk.init(
     os.environ.get('SENTRY_DNS'),

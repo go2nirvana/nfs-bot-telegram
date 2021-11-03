@@ -4,9 +4,10 @@ from pprint import pprint
 
 import pytz
 import requests
-from pytz import timezone
 
-from bg_calendar import calendar, get_next_bg
+from bg_calendar import get_next_bg
+from exceptions import WeatherException, TooFarException, BadAPIResponse, TypeValidationException, APILimitException, \
+    NoBGException
 
 os.environ['TZ'] = 'Europe/Kiev'
 request_time_format = '%Y-%m-%dT%H:%M:%S%z'
@@ -76,7 +77,7 @@ events_length = {
     'gonzo': 3,
     'll': 3,
     'lch': 3,
-    'bg': get_next_bg(datetime.today().date())['length'] + 1,  # add qualifying length
+    'bg': (get_next_bg(datetime.today().date())['length'] or 0) + 1,  # add qualifying length
     'day': 11,  # opens at 11, closes at 22
     'week': 7 * 24  # 7 full days
 }
@@ -94,42 +95,14 @@ too_far_text = 'Сорри, прогноз доступен максимум н�
 bad_response_text = 'Чет сервис погоды ругается (или я рак).'
 
 
-class WeatherException(Exception):
-    text = None
-
-
-class TooFarException(WeatherException):
-    text = 'Сорри, прогноз доступен максимум на 15 дней вперед.'
-
-
-class BadAPIResponse(WeatherException):
-    text = 'Чет сервис погоды ругается (или я рак).'
-
-class TypeValidationException(WeatherException):
-    text = ("Такого ивента нет. Доступные:\n"
-            "`gonzo` - гонзалес\n"
-            "`ll` - лайт лига\n"
-            "`lch` - лига чемпионов\n"
-            "`bg` - БэГэ\n"
-            "`day` - прогноз на день\n"
-            "`week` - прогноз на неделю")
-
-
-class APILimitException(WeatherException):
-    api_code = 429
-    text = 'Лимит запросов исчерпан. Лимиты: 25/ч, 500/день'
-
-    def __init__(self, left_day, left_hour):
-        left_text = f'Осталось: {left_hour}/ч, {left_day}/день'
-        self.text = '\n'.join([self.text, left_text])
-        super().__init__()
-
-
-class WeatherForecast:
+class WeatherForecaxst:
     start_time: datetime
     end_time: datetime
 
     def __init__(self, event_type):
+        if event_type == 'bg':
+            if get_next_bg() is None:
+                raise NoBGException
         self.event_type = event_type
         self.validate_types()
         self.set_times(event_type)

@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from exceptions import NoBGException
+
 calendar = (
     {'date': '17.04.2021',
      'length': 4},
@@ -37,7 +39,7 @@ for item in calendar:
     item['date'] = datetime.strptime(item['date'], '%d.%m.%Y').date()
 
 
-def get_next_bg(date_):
+def get_next_bg(date_=datetime.today().date()):
     for item in calendar:
         if item['date'] >= date_:
             return item

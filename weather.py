@@ -77,7 +77,7 @@ events_length = {
     'gonzo': 3,
     'll': 3,
     'lch': 3,
-    'bg': (get_next_bg(datetime.today().date())['length'] or 0) + 1,  # add qualifying length
+    'bg': (get_next_bg(datetime.today().date()) or {}).get('length', 0) + 1,  # add qualifying length
     'day': 11,  # opens at 11, closes at 22
     'week': 7 * 24  # 7 full days
 }

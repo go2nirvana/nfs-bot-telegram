@@ -52,9 +52,9 @@ raketa_text = (
 
 
 timing_text = """
-http://nfs.playwar.com/board.html
-http://nfs.playwar.com/onboard.html
-http://nfs.playwar.com/team.html
+https://nfs-stats.herokuapp.com/board.html
+https://nfs-stats.herokuapp.com/onboard.html
+https://nfs-stats.herokuapp.com/team.html
 """
 
 

@@ -1,7 +1,7 @@
 import datetime
+import json
 import os
 import re
-from ast import literal_eval
 from random import choice, randint
 from time import sleep
 
@@ -35,20 +35,21 @@ pipi = (
     'пожалуйста, обращайтесь к [{}](tg://user?id={})'.format('Керрилу', os.environ.get('KIRILL_ID'))
 )
 
+print('Connecting to redis...')
 redis_cli = redis.from_url(os.environ.get('REDISCLOUD_URL'))
 
 
 def set_rolled_today(chat_id):
     rec = _get_mulyar_data(str(chat_id))
     rec['updated'] = datetime.date.today().isoformat()
-    redis_cli.set(str(chat_id), rec)
+    redis_cli.set(str(chat_id), json.dumps(rec))
 
 
 def set_winner(chat_id, user_id, name='Муляр'):
     rec = _get_mulyar_data(str(chat_id))
     rec['winner'] = str(user_id)
     rec['custom_name'] = name
-    redis_cli.set(str(chat_id), rec)
+    redis_cli.set(str(chat_id), json.dumps(rec))
 
 
 def is_rolled_today(chat_id):
@@ -58,7 +59,7 @@ def is_rolled_today(chat_id):
 
 def _get_mulyar_data(chat_id):
     res = redis_cli.get(str(chat_id))
-    return literal_eval(res.decode()) if res else None
+    return json.loads(res) if res else None
 
 
 def accumulate_users(bot, update):
@@ -74,7 +75,7 @@ def accumulate_users(bot, update):
                        'winner': ''}
     if user_id not in mulyar_data['pull']:
         mulyar_data['pull'].append(user_id)
-        redis_cli.set(str(chat_id), mulyar_data)
+        redis_cli.set(str(chat_id), json.dumps(mulyar_data))
 
 
 def roll_mulyar(bot, update):

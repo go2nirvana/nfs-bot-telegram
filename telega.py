@@ -5,7 +5,7 @@ import redis
 import telegram
 from telegram import ParseMode
 
-redis_cli = redis.from_url(os.environ.get('REDIS_URL'))
+redis_cli = redis.from_url(os.environ.get('REDISCLOUD_URL'))
 
 
 def get_chat_telegas(chat_id):

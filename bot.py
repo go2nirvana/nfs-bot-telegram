@@ -11,10 +11,14 @@ from telega import notime
 from exceptions import WeatherException
 from weather import WeatherForecast
 
+print('Starting')
+
 sentry_sdk.init(
     os.environ.get('SENTRY_DNS'),
     traces_sample_rate=1.0
 )
+
+print('Sentry init...')
 
 nfs_chat_id = os.environ.get('NFS_CHAT_ID')
 admin_chat_id = os.environ.get('ADMIN_CHAT_ID')
@@ -172,4 +176,6 @@ dispatcher.add_handler(CommandHandler('notime', notime))
 dispatcher.add_handler(CommandHandler('help', help))
 dispatcher.add_handler(CommandHandler('w', weather))
 
+print('Polling...')
 updater.start_polling()
+

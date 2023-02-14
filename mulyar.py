@@ -35,7 +35,7 @@ pipi = (
     'пожалуйста, обращайтесь к [{}](tg://user?id={})'.format('Керрилу', os.environ.get('KIRILL_ID'))
 )
 
-redis_cli = redis.from_url(os.environ.get('REDIS_URL'))
+redis_cli = redis.from_url(os.environ.get('REDISCLOUD_URL'))
 
 
 def set_rolled_today(chat_id):
